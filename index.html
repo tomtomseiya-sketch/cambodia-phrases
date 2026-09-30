@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>カンボジア語 旅行フレーズ集</title>
+<style>
+  :root{
+    --bg:#fdfaf5;
+    --card:#ffffff;
+    --ink:#2b2420;
+    --sub:#7a6f63;
+    --accent:#c65d3b;
+    --accent-soft:#f3ded3;
+    --line:#ece3d8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Hiragino Sans","Yu Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+    padding-bottom:40px;
+  }
+  header{
+    position:sticky;
+    top:0;
+    background:var(--bg);
+    z-index:10;
+    padding:14px 16px 10px;
+    border-bottom:1px solid var(--line);
+  }
+  h1{
+    font-size:1.15rem;
+    margin:0 0 2px;
+  }
+  .sub{
+    font-size:0.78rem;
+    color:var(--sub);
+    margin:0 0 10px;
+  }
+  #search{
+    width:100%;
+    padding:10px 12px;
+    font-size:1rem;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:#fff;
+    -webkit-appearance:none;
+  }
+  #search:focus{outline:2px solid var(--accent-soft);}
+  .cats{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    padding:10px 16px 4px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .cats::-webkit-scrollbar{display:none;}
+  .cat-btn{
+    flex:0 0 auto;
+    padding:7px 13px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--sub);
+    font-size:0.82rem;
+    white-space:nowrap;
+  }
+  .cat-btn.active{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+  main{
+    padding:12px 16px 0;
+    max-width:520px;
+    margin:0 auto;
+  }
+  .section-title{
+    font-size:0.85rem;
+    color:var(--accent);
+    font-weight:bold;
+    margin:22px 2px 8px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    position:relative;
+  }
+  .card-top{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .icon{
+    font-size:1.8rem;
+    line-height:1;
+    flex:0 0 auto;
+  }
+  .card-body{
+    flex:1 1 auto;
+    min-width:0;
+  }
+  .meaning{
+    font-size:1.02rem;
+    font-weight:bold;
+    margin:0 0 6px;
+  }
+  .kana{
+    font-size:1.35rem;
+    color:var(--accent);
+    font-weight:bold;
+    letter-spacing:0.02em;
+    margin:0 0 6px;
+    line-height:1.35;
+  }
+  .khmer{
+    font-size:1rem;
+    color:var(--sub);
+    margin:0 0 8px;
+  }
+  .situ{
+    font-size:0.82rem;
+    color:var(--sub);
+    line-height:1.5;
+    border-top:1px dashed var(--line);
+    padding-top:8px;
+    margin:0 0 10px;
+  }
+  .show-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:6px 12px;
+    border-radius:999px;
+    border:1px solid var(--accent);
+    background:#fff;
+    color:var(--accent);
+    font-size:0.78rem;
+    font-weight:bold;
+  }
+  .show-btn:active{
+    background:var(--accent-soft);
+  }
+  .del-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:6px 12px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--sub);
+    font-size:0.78rem;
+    margin-left:6px;
+  }
+  .del-btn:active{
+    background:#f3e9e3;
+  }
+  .fab{
+    position:fixed;
+    right:18px;
+    bottom:24px;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    font-size:1.8rem;
+    border:none;
+    box-shadow:0 4px 14px rgba(198,93,59,0.4);
+    z-index:20;
+    line-height:1;
+  }
+  #addModal{
+    position:fixed;
+    inset:0;
+    background:rgba(43,36,32,0.45);
+    z-index:110;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  #addModal.open{display:flex;}
+  .add-sheet{
+    background:#fff;
+    width:100%;
+    max-width:520px;
+    border-radius:18px 18px 0 0;
+    padding:20px 18px 26px;
+    max-height:88vh;
+    overflow-y:auto;
+  }
+  .add-sheet h2{
+    font-size:1.05rem;
+    margin:0 0 4px;
+  }
+  .add-sheet .hint{
+    font-size:0.78rem;
+    color:var(--sub);
+    margin:0 0 16px;
+  }
+  .field{
+    margin-bottom:14px;
+  }
+  .field label{
+    display:block;
+    font-size:0.78rem;
+    color:var(--sub);
+    margin-bottom:5px;
+  }
+  .field input,
+  .field textarea{
+    width:100%;
+    padding:10px 12px;
+    font-size:1rem;
+    border:1px solid var(--line);
+    border-radius:10px;
+    font-family:inherit;
+    -webkit-appearance:none;
+  }
+  .field textarea{
+    resize:vertical;
+    min-height:56px;
+  }
+  .add-actions{
+    display:flex;
+    gap:10px;
+    margin-top:6px;
+  }
+  .btn-save,
+  .btn-cancel{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    font-size:0.95rem;
+    font-weight:bold;
+    border:none;
+  }
+  .btn-save{
+    background:var(--accent);
+    color:#fff;
+  }
+  .btn-cancel{
+    background:#f2ece5;
+    color:var(--ink);
+  }
+  .empty{
+    text-align:center;
+    color:var(--sub);
+    padding:40px 10px;
+    font-size:0.9rem;
+  }
+  .install{
+    max-width:520px;
+    margin:26px auto 0;
+    padding:14px 16px;
+    background:var(--accent-soft);
+    border-radius:14px;
+    font-size:0.82rem;
+    color:var(--ink);
+    line-height:1.6;
+  }
+  .install b{color:var(--accent);}
+  .note{
+    max-width:520px;
+    margin:14px auto 0;
+    padding:0 16px;
+    font-size:0.75rem;
+    color:var(--sub);
+    line-height:1.6;
+  }
+  #showModal{
+    position:fixed;
+    inset:0;
+    background:#fffdf9;
+    z-index:100;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    text-align:center;
+  }
+  #showModal.open{display:flex;}
+  #showModal .m-icon{
+    font-size:5rem;
+    line-height:1;
+    margin-bottom:18px;
+  }
+  #showModal .m-khmer{
+    font-size:2.3rem;
+    font-weight:bold;
+    line-height:1.4;
+    margin:0 0 18px;
+    word-break:keep-all;
+  }
+  #showModal .m-meaning{
+    font-size:1.1rem;
+    color:var(--sub);
+    margin:0;
+  }
+  #showModal .m-close{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:#fff;
+    font-size:1.2rem;
+    color:var(--sub);
+  }
+  #showModal .m-hint{
+    position:absolute;
+    bottom:26px;
+    left:0;
+    right:0;
+    font-size:0.75rem;
+    color:var(--sub);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>カンボジア語 旅行フレーズ集</h1>
+  <p class="sub">クメール語の日常会話をカタカナ発音で。シチュエーション別に探せます</p>
+  <input type="text" id="search" placeholder="ことば・意味で検索（例：ありがとう）">
+</header>
+
+<div class="cats" id="cats"></div>
+
+<main id="main"></main>
+
+<div id="showModal">
+  <button class="m-close" onclick="closeShow()">✕</button>
+  <div class="m-icon" id="mIcon"></div>
+  <p class="m-khmer" id="mKhmer"></p>
+  <p class="m-meaning" id="mMeaning"></p>
+  <p class="m-hint">この画面を相手に見せてください</p>
+</div>
+
+<button class="fab" onclick="openAdd()">＋</button>
+
+<div id="addModal">
+  <div class="add-sheet">
+    <h2>単語を追加</h2>
+    <p class="hint">現地で覚えた言葉をメモしておけます。わかる項目だけでOK。</p>
+    <div class="field">
+      <label>意味（日本語）※必須</label>
+      <input type="text" id="inMeaning" placeholder="例：おいしい">
+    </div>
+    <div class="field">
+      <label>発音メモ（カタカナ）</label>
+      <input type="text" id="inKana" placeholder="例：チュガン">
+    </div>
+    <div class="field">
+      <label>クメール語表記（わかれば）</label>
+      <input type="text" id="inKhmer" placeholder="現地の看板・メニューの文字など">
+    </div>
+    <div class="field">
+      <label>メモ・使ったシーン</label>
+      <textarea id="inSitu" placeholder="例：市場の屋台で店員さんに教えてもらった"></textarea>
+    </div>
+    <div class="add-actions">
+      <button class="btn-cancel" onclick="closeAdd()">キャンセル</button>
+      <button class="btn-save" onclick="saveNewPhrase()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="install">
+  <b>ホーム画面に追加する方法</b><br>
+  ・iPhone（Safari）：下の「共有」ボタン → 「ホーム画面に追加」<br>
+  ・Android（Chrome）：右上の「⋮」メニュー → 「ホーム画面に追加」<br>
+  一度保存すれば、電波がない場所でもアプリのように開けます。
+</div>
+
+<p class="note">
+  発音はカタカナでの目安です。クメール語には日本語にない音があり、完全には再現できません。<br>
+  実際に使うときは、現地の方の発音を聞いて確認してください。<br><br>
+  「マイ単語帳」に追加した単語は、この画面を開いているスマホの中だけに保存されます（他の端末には共有されません）。ブラウザのデータを消すと一緒に消えるのでご注意ください。
+</p>
+
+<script>
+const catIcons = {
+  "挨拶・基本":"🙏",
+  "自己紹介・調子":"😊",
+  "数字":"🔢",
+  "タクシー・移動":"🛺",
+  "レストラン・食事":"🍽️",
+  "市場・買い物":"🛍️",
+  "ホテル":"🛎️",
+  "トラブル・緊急":"🆘",
+  "場所を聞く":"📍",
+  "マイ単語帳":"📝",
+};
+
+const MY_CAT = "マイ単語帳";
+
+const builtinData = [
+  {cat:"挨拶・基本", items:[
+    {icon:"🙏", khmer:"ជំរាបសួរ", kana:"チュムリアプ・スオ", meaning:"こんにちは／はじめまして", situ:"出会ったとき、お店に入るときなど、誰にでも使える万能の挨拶。"},
+    {icon:"👋", khmer:"លាហើយ", kana:"リア・ハウイ", meaning:"さようなら", situ:"別れるときのあいさつ。"},
+    {icon:"👍", khmer:"បាទ", kana:"バート", meaning:"はい（男性が使う）", situ:"男性が返事をするときの「はい」。女性は使わない。"},
+    {icon:"👍", khmer:"ចាស", kana:"チャー", meaning:"はい（女性が使う）", situ:"女性が返事をするときの「はい」。男性は使わない。"},
+    {icon:"✋", khmer:"ទេ", kana:"テ", meaning:"いいえ／違います", situ:"否定するとき。単独でも使える。"},
+    {icon:"🙏", khmer:"សុំទោស", kana:"ソム・トー", meaning:"すみません／ごめんなさい", situ:"人に声をかけるとき、謝るとき、すれ違うときなど幅広く使う。"},
+    {icon:"🙏", khmer:"អរគុណ", kana:"オークン", meaning:"ありがとう", situ:"お礼を言うとき。旅行中いちばん使う言葉。"},
+    {icon:"💛", khmer:"អរគុណច្រើន", kana:"オークン・チュラン", meaning:"どうもありがとう", situ:"特に感謝を伝えたいときに強めて言う。"},
+    {icon:"👌", khmer:"មិនអីទេ", kana:"ミン・アイ・テ", meaning:"大丈夫です／問題ないです", situ:"お礼を言われた返事や、謝られたときの返事に使う。"},
+  ]},
+  {cat:"自己紹介・調子", items:[
+    {icon:"😊", khmer:"សុខសប្បាយទេ", kana:"ソクサバーイ・テ", meaning:"お元気ですか", situ:"知り合いや宿の人に会ったときの声かけ。"},
+    {icon:"😊", khmer:"សុខសប្បាយ", kana:"ソクサバーイ", meaning:"元気です", situ:"「お元気ですか」と聞かれたときの返事。"},
+    {icon:"🧑", khmer:"ខ្ញុំឈ្មោះ…", kana:"クニョム・チュモゥ〜", meaning:"私の名前は〜です", situ:"自己紹介するとき。〜の部分に自分の名前を入れる。"},
+    {icon:"🇯🇵", khmer:"ខ្ញុំមកពីជប៉ុន", kana:"クニョム・モック・ピー・チャポン", meaning:"私は日本から来ました", situ:"出身を聞かれたときの答え。"},
+  ]},
+  {cat:"数字", items:[
+    {icon:"1️⃣", khmer:"មួយ", kana:"モーイ", meaning:"1", situ:"数を伝えるとき、値段交渉のときに使う基本の数字。"},
+    {icon:"2️⃣", khmer:"ពីរ", kana:"ピー", meaning:"2", situ:""},
+    {icon:"3️⃣", khmer:"បី", kana:"バイ", meaning:"3", situ:""},
+    {icon:"4️⃣", khmer:"បួន", kana:"ボゥオン", meaning:"4", situ:""},
+    {icon:"5️⃣", khmer:"ប្រាំ", kana:"プロム", meaning:"5", situ:""},
+    {icon:"6️⃣", khmer:"ប្រាំមួយ", kana:"プロム・モーイ", meaning:"6", situ:"5＋1の組み合わせで作る。"},
+    {icon:"7️⃣", khmer:"ប្រាំពីរ", kana:"プロム・ピー", meaning:"7", situ:"5＋2の組み合わせで作る。"},
+    {icon:"8️⃣", khmer:"ប្រាំបី", kana:"プロム・バイ", meaning:"8", situ:"5＋3の組み合わせで作る。"},
+    {icon:"9️⃣", khmer:"ប្រាំបួន", kana:"プロム・ボゥオン", meaning:"9", situ:"5＋4の組み合わせで作る。"},
+    {icon:"🔟", khmer:"ដប់", kana:"ドップ", meaning:"10", situ:""},
+    {icon:"💯", khmer:"មួយរយ", kana:"モーイ・ロイ", meaning:"100", situ:"リエルでの値段は数百〜数千単位が多い。"},
+    {icon:"💰", khmer:"មួយពាន់", kana:"モーイ・ポアン", meaning:"1000", situ:"市場やタクシーの料金でよく出てくる単位（1000リエル）。"},
+  ]},
+  {cat:"タクシー・移動", items:[
+    {icon:"🛺", khmer:"ជួយហៅតុកតុកឲ្យខ្ញុំ", kana:"チュオイ・ハウ・トゥクトゥク・アオイ・クニョム", meaning:"トゥクトゥクを呼んでください", situ:"ホテルやお店の人に移動手段を頼むとき。"},
+    {icon:"🗺️", khmer:"ទៅ…", kana:"トー・〜", meaning:"〜へ行ってください", situ:"「トー」の後に地名や場所を続けて行き先を伝える。地図やスマホの画面を見せると確実。"},
+    {icon:"💰", khmer:"តម្លៃប៉ុន្មាន", kana:"タムライ・ポンマーン", meaning:"いくらですか", situ:"乗る前に料金を確認するときの必須フレーズ。"},
+    {icon:"📈", khmer:"ថ្លៃពេក", kana:"トライ・ペック", meaning:"高すぎます", situ:"値段交渉で最初に言う一言。"},
+    {icon:"📉", khmer:"ចុះថ្លៃបានទេ", kana:"チョ・トライ・バーン・テ", meaning:"安くしてもらえますか", situ:"値段交渉の決め台詞。笑顔で言うと通りやすい。"},
+    {icon:"🛑", khmer:"ឈប់នៅទីនេះ", kana:"チョップ・ノヴ・ティー・ニ", meaning:"ここで止めてください", situ:"目的地に着いたとき、途中で止めたいとき。"},
+  ]},
+  {cat:"レストラン・食事", items:[
+    {icon:"📋", khmer:"សុំមីនុយ", kana:"ソム・メニュー", meaning:"メニューをください", situ:"席に着いたとき最初に言う。"},
+    {icon:"❓", khmer:"នេះជាអ្វី", kana:"ニ・チア・アヴァイ", meaning:"これは何ですか", situ:"メニューや料理を指して聞くとき。"},
+    {icon:"😋", khmer:"ឆ្ងាញ់ណាស់", kana:"チュガン・ナー", meaning:"とても美味しいです", situ:"食事の感想を伝えたいとき。喜ばれる一言。"},
+    {icon:"🌶️", khmer:"ហឹរ", kana:"ハー", meaning:"辛い", situ:"辛さを確認・伝えるとき。"},
+    {icon:"🚫", khmer:"សុំមិនហឹរ", kana:"ソム・ミン・ハー", meaning:"辛くしないでください", situ:"辛い物が苦手なとき、注文時に伝える。"},
+    {icon:"💧", khmer:"សុំទឹក", kana:"ソム・トゥック", meaning:"お水をください", situ:"飲み物を頼むとき。"},
+    {icon:"🥗", khmer:"ខ្ញុំមិនញ៉ាំសាច់", kana:"クニョム・ミン・ニャム・サッチ", meaning:"私は肉を食べません", situ:"ベジタリアンなど食事制限を伝えるとき。"},
+    {icon:"🧾", khmer:"គិតលុយ", kana:"キット・ルイ", meaning:"お会計お願いします", situ:"食事が終わったときに店員に伝える。"},
+  ]},
+  {cat:"市場・買い物", items:[
+    {icon:"💰", khmer:"តម្លៃប៉ុន្មាន", kana:"タムライ・ポンマーン", meaning:"これはいくらですか", situ:"品物を指して値段を聞くとき。"},
+    {icon:"🛍️", khmer:"សុំមួយនេះ", kana:"ソム・モーイ・ニ", meaning:"これを1つください", situ:"買う物を決めたとき。"},
+    {icon:"📏", khmer:"មានទំហំផ្សេងទេ", kana:"ミアン・トムホム・プセーン・テ", meaning:"他のサイズはありますか", situ:"洋服や靴のサイズ違いを探すとき。"},
+    {icon:"👀", khmer:"ខ្ញុំមើលមុនសិន", kana:"クニョム・マール・ムン・セン", meaning:"まず見るだけです", situ:"買う気がなく品物を見ているだけのとき、強い勧誘を断るのにも使える。"},
+    {icon:"📉", khmer:"ចុះថ្លៃបានទេ", kana:"チョ・トライ・バーン・テ", meaning:"安くしてもらえますか", situ:"市場での値段交渉はほぼ前提。笑顔で粘り強く。"},
+    {icon:"👌", khmer:"យល់ព្រម", kana:"ヨル・プロム", meaning:"それでいいです／了解", situ:"値段交渉がまとまったときの一言。"},
+  ]},
+  {cat:"ホテル", items:[
+    {icon:"🛎️", khmer:"ខ្ញុំចង់ចាកបន្ទប់", kana:"クニョム・チャン・チャック・バントゥップ", meaning:"チェックインしたいです", situ:"フロントに着いたとき。"},
+    {icon:"📶", khmer:"បន្ទប់មានវីហ្វីទេ", kana:"バントゥップ・ミアン・ワイファイ・テ", meaning:"部屋にWi-Fiはありますか", situ:"設備を確認するとき。"},
+    {icon:"🔑", khmer:"សុំកូនសោរ", kana:"ソム・コン・ソー", meaning:"鍵をください", situ:"フロントで鍵を受け取るとき。"},
+    {icon:"🧹", khmer:"ជួយសំអាតបន្ទប់", kana:"チュオイ・ソム・アート・バントゥップ", meaning:"部屋を掃除してください", situ:"清掃をお願いするとき。"},
+    {icon:"🧳", khmer:"ខ្ញុំចង់ចេញពីសំបុត្រ", kana:"クニョム・チャン・チェニ・ホテル", meaning:"チェックアウトしたいです", situ:"出発するときにフロントで伝える。"},
+  ]},
+  {cat:"トラブル・緊急", items:[
+    {icon:"🆘", khmer:"ជួយផង", kana:"チュオイ・ポン", meaning:"助けてください", situ:"緊急のとき、大きな声で伝える一言。"},
+    {icon:"🤒", khmer:"ខ្ញុំឈឺ", kana:"クニョム・チュー", meaning:"具合が悪いです", situ:"体調不良を伝えるとき。"},
+    {icon:"🏥", khmer:"មន្ទីរពេទ្យនៅឯណា", kana:"モンティー・ペット・ノヴ・アエナ", meaning:"病院はどこですか", situ:"具合が悪いとき、けがをしたときに周りの人に聞く。"},
+    {icon:"👮", khmer:"ប៉ូលិសនៅឯណា", kana:"ポリス・ノヴ・アエナ", meaning:"警察はどこですか", situ:"トラブルに遭ったとき。"},
+    {icon:"🎒", khmer:"ខ្ញុំបាត់កាបូប", kana:"クニョム・バット・カーボップ", meaning:"（かばんを）なくしました", situ:"「カーボップ」の部分を「パスポート」「携帯」など無くした物に入れ替えて使える。"},
+    {icon:"😕", khmer:"មិនយល់ទេ", kana:"ミン・ヨル・テ", meaning:"わかりません", situ:"言葉が通じないとき。"},
+    {icon:"🗣️", khmer:"និយាយភាសាអង់គ្លេសបានទេ", kana:"ニヤーイ・ピアサー・オングレー・バーン・テ", meaning:"英語を話せますか", situ:"クメール語が通じないときに聞く一言。"},
+  ]},
+  {cat:"場所を聞く", items:[
+    {icon:"🚻", khmer:"បង្គន់នៅឯណា", kana:"バンクン・ノヴ・アエナ", meaning:"トイレはどこですか", situ:"どんな場所でも使える必須フレーズ。"},
+    {icon:"🏦", khmer:"ធនាគារនៅឯណា", kana:"トニアギア・ノヴ・アエナ", meaning:"銀行はどこですか", situ:"両替やATMを探すとき。"},
+    {icon:"📍", khmer:"ជិតបំផុតនៅឯណា", kana:"チット・バンポット・ノヴ・アエナ", meaning:"一番近いのはどこですか", situ:"「〜ノヴ・アエナ（〜はどこですか）」の前に探したい場所の単語を置くと応用できる。"},
+  ]},
+];
+
+const catsEl = document.getElementById("cats");
+const mainEl = document.getElementById("main");
+const searchEl = document.getElementById("search");
+const showModal = document.getElementById("showModal");
+const mIcon = document.getElementById("mIcon");
+const mKhmer = document.getElementById("mKhmer");
+const mMeaning = document.getElementById("mMeaning");
+const addModal = document.getElementById("addModal");
+
+let activeCat = "すべて";
+
+const MY_KEY = "cambodiaPhrases_my_v1";
+
+function loadMy(){
+  try{
+    return JSON.parse(localStorage.getItem(MY_KEY) || "[]");
+  }catch(e){
+    return [];
+  }
+}
+
+function saveMy(list){
+  localStorage.setItem(MY_KEY, JSON.stringify(list));
+}
+
+function getData(){
+  const my = loadMy();
+  return [...builtinData, {cat: MY_CAT, items: my}];
+}
+
+function allCategories(){
+  return ["すべて", ...getData().map(d => d.cat)];
+}
+
+function renderCats(){
+  catsEl.innerHTML = "";
+  allCategories().forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "cat-btn" + (cat === activeCat ? " active" : "");
+    btn.textContent = (catIcons[cat] ? catIcons[cat] + " " : "") + cat;
+    btn.onclick = () => { activeCat = cat; render(); };
+    catsEl.appendChild(btn);
+  });
+}
+
+function render(){
+  const data = getData();
+  renderCats();
+  const q = searchEl.value.trim();
+  mainEl.innerHTML = "";
+  let found = 0;
+  let counter = 0;
+  window._items = [];
+
+  data.forEach(section => {
+    if(activeCat !== "すべて" && activeCat !== section.cat) return;
+
+    const matched = section.items.filter(item => {
+      if(!q) return true;
+      const hay = (item.meaning + item.kana + item.khmer + item.situ).toLowerCase();
+      return hay.includes(q.toLowerCase());
+    });
+
+    if(section.cat === MY_CAT && matched.length === 0 && !q && activeCat === MY_CAT){
+      const title = document.createElement("div");
+      title.className = "section-title";
+      title.textContent = catIcons[MY_CAT] + " " + MY_CAT;
+      mainEl.appendChild(title);
+      mainEl.innerHTML += `<div class="empty">まだ単語が登録されていません。右下の「＋」から追加できます。</div>`;
+      found += 1;
+      return;
+    }
+    if(matched.length === 0) return;
+
+    found += matched.length;
+
+    const title = document.createElement("div");
+    title.className = "section-title";
+    title.textContent = (catIcons[section.cat] ? catIcons[section.cat] + " " : "") + section.cat;
+    mainEl.appendChild(title);
+
+    matched.forEach(item => {
+      const idx = counter++;
+      window._items[idx] = item;
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="card-top">
+          <div class="icon">${item.icon || "📝"}</div>
+          <div class="card-body">
+            <p class="meaning">${item.meaning}</p>
+            ${item.kana ? `<p class="kana">${item.kana}</p>` : ""}
+            ${item.khmer ? `<p class="khmer">${item.khmer}</p>` : ""}
+          </div>
+        </div>
+        ${item.situ ? `<p class="situ">${item.situ}</p>` : ""}
+        <button class="show-btn" onclick="openShow(${idx})">🔍 相手に見せる</button>
+        ${item.custom ? `<button class="del-btn" onclick="deleteMyPhrase('${item.id}')">🗑 削除</button>` : ""}
+      `;
+      mainEl.appendChild(card);
+    });
+  });
+
+  if(found === 0){
+    mainEl.innerHTML = `<div class="empty">見つかりませんでした</div>`;
+  }
+}
+
+function openShow(idx){
+  const item = window._items[idx];
+  mIcon.textContent = item.icon || "📝";
+  mKhmer.textContent = item.khmer || item.kana || "";
+  mMeaning.textContent = item.meaning;
+  showModal.classList.add("open");
+}
+
+function closeShow(){
+  showModal.classList.remove("open");
+}
+
+showModal.addEventListener("click", (e) => {
+  if(e.target === showModal) closeShow();
+});
+
+function openAdd(){
+  document.getElementById("inMeaning").value = "";
+  document.getElementById("inKana").value = "";
+  document.getElementById("inKhmer").value = "";
+  document.getElementById("inSitu").value = "";
+  addModal.classList.add("open");
+}
+
+function closeAdd(){
+  addModal.classList.remove("open");
+}
+
+addModal.addEventListener("click", (e) => {
+  if(e.target === addModal) closeAdd();
+});
+
+function saveNewPhrase(){
+  const meaning = document.getElementById("inMeaning").value.trim();
+  const kana = document.getElementById("inKana").value.trim();
+  const khmer = document.getElementById("inKhmer").value.trim();
+  const situ = document.getElementById("inSitu").value.trim();
+
+  if(!meaning){
+    alert("意味（日本語）だけは入力してください");
+    return;
+  }
+
+  const my = loadMy();
+  my.unshift({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    icon: "📝",
+    meaning, kana, khmer, situ,
+    custom: true,
+  });
+  saveMy(my);
+
+  closeAdd();
+  activeCat = MY_CAT;
+  render();
+}
+
+function deleteMyPhrase(id){
+  if(!confirm("この単語を削除しますか？")) return;
+  const my = loadMy().filter(item => item.id !== id);
+  saveMy(my);
+  render();
+}
+
+searchEl.addEventListener("input", render);
+render();
+</script>
+
+</body>
+</html>
